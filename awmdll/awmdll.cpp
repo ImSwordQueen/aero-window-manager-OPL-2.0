@@ -1439,22 +1439,7 @@ long CTLW_UpdateNCAreaPositionsAndSizes_Hook(BYTE* pThis) {
 
         tagSIZE size = {0, clientMargins.cyTopHeight - borderSize - 2};
 
-        CVisual_SetInsetFromParentTop(textVisual, borderSize + 1);
-        //CVisual_SetInsetFromParentLeft(textVisual, insetLeft);
-        
-        // Changed from above to support my hacky method of handling text glow
-        CVisual_SetInsetFromParentLeft(textVisual, 1 + borderSizes->cxLeftWidth);
-        CVisual_SetInsetFromParentRight(textVisual, 1);
-        CVisual_SetSize(textVisual, &size);
-
-        // place this somewhere it will update on window resize.
-        TEXTEX* textex = *(TEXTEX**)(textVisual + CTxt_Ex);
-        //RECT winrc = *(RECT*)(windowVisual + CWD_WindowRect);
-        //textex->tbWidth = winrc.right - winrc.left;
-        textex->textInset = { 0 };
-        textex->textInset.cxLeftWidth = insetLeft - 1 - borderSizes->cxLeftWidth;
-        textex->textInset.cxRightWidth = insetRight - 1;
-
+        CVisual_SetInsetFromParentLeft(textVisual, insetLeft);
 
         // SOME TESTING CODE. IT CAN BE SAFELY REMOVED AND IS NOT SUPPOSED TO BE HERE.
 
@@ -2206,59 +2191,7 @@ int HookFunctions() {
     if (rv) {
         return ERR_FH_INIT;
     }
-    rv = funchook_prepare(funchook, (void**)&CTLW_UpdateColorizationColor_orig, CTLW_UpdateColorizationColor_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CTLW_UpdateNCAreaBackground_orig, CTLW_UpdateNCAreaBackground_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_ValidateResources_orig, CText_ValidateResources_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_CText_orig, CText_CText_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_SetColor_orig, CText_SetColor_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_SetBackgroundColor_orig, CText_SetBackgroundColor_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CTLW_UpdateWindowVisuals_orig, CTLW_UpdateWindowVisuals_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_InitializeVisualTreeClone_orig, CText_InitializeVisualTreeClone_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_Destroy_orig, CText_Destroy_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CDesktopManager_LoadTheme_orig, CDesktopManager_LoadTheme_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CDesktopManager_UnloadTheme_orig, CDesktopManager_UnloadTheme_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
     rv = funchook_prepare(funchook, (void**)&CButton_SetVisualStates_orig, CButton_SetVisualStates_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_SetText_orig, CText_SetText_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_SetFont_orig, CText_SetFont_Hook);
     if (rv) {
         return ERR_FH_INIT;
     }
