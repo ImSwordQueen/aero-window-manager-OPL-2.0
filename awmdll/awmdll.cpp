@@ -716,9 +716,9 @@ void CVisual_SetInsetFromParentBottom(BYTE* pThis, int inset) {
 void CVisual_SetInsetFromParent(BYTE* pThis, _MARGINS* inset) {
     MARGINS* insetFromParent = (MARGINS*)(pThis + CVis_InsetFromParent);
     if (insetFromParent->cxLeftWidth != inset->cxLeftWidth
-     || insetFromParent->cxRightWidth != inset->cxRightWidth
-     || insetFromParent->cyTopHeight != inset->cyTopHeight
-     || insetFromParent->cyBottomHeight != inset->cyBottomHeight) 
+        || insetFromParent->cxRightWidth != inset->cxRightWidth
+        || insetFromParent->cyTopHeight != inset->cyTopHeight
+        || insetFromParent->cyBottomHeight != inset->cyBottomHeight)
     {
         *(MARGINS*)(pThis + CVis_InsetFromParent) = *inset;
         CVisual_SetDirtyFlags(pThis, 2);
@@ -728,7 +728,7 @@ void CVisual_SetInsetFromParent(BYTE* pThis, _MARGINS* inset) {
 void CVisual_SetSize(BYTE* pThis, tagSIZE* size) {
     SIZE* currentSize = (SIZE*)(pThis + CVis_Size);
     if (currentSize->cx != size->cx
-      || currentSize->cy != size->cy) 
+        || currentSize->cy != size->cy)
     {
         *(SIZE*)(pThis + CVis_Size) = *size;
         if (*(pThis + CVis_SomeFlags) & 1) {
@@ -755,7 +755,7 @@ void CVisual_Unhide(BYTE* pThis) {
 
 bool CTopLevelWindow_IsSheetOfGlass(BYTE* pThis) {
     BYTE* windowVisual = *(BYTE**)(pThis + CTLW_WindowVisual);
-    return *(int*)(windowVisual + 80) == 0x7fffffff 
+    return *(int*)(windowVisual + 80) == 0x7fffffff
         && *(int*)(windowVisual + 84) == 0x7fffffff
         && *(int*)(windowVisual + 88) == 0x7fffffff
         && *(int*)(windowVisual + 92) == 0x7fffffff; // not sure what these offsets are meant to represent (88 even overlaps with CVis_Hidden)
@@ -770,7 +770,7 @@ void CText_CreateTextLayout(BYTE* pThis) {
     LOGFONT font = *(LOGFONT*)(pThis + CTxt_Font);
     if (string) {
         int stringlength = wcslen(string);
-        DWRITE_TEXT_RANGE range = { 0, stringlength }; 
+        DWRITE_TEXT_RANGE range = { 0, stringlength };
         hr = dwritefactory->CreateTextLayout(string, stringlength, textformat, 0, 0, &textlayout);
         if (hr < 0)
             goto release;
@@ -908,12 +908,12 @@ bool CTLW_UpdateMarginsDependentOnStyle_Hook(BYTE* pThis) {
     MARGINS borMargins = *(MARGINS*)(windowData + CWD_BorderMargins);
 
     if (isSomething
-     && borMargins.cxLeftWidth >= CTLW_marMinInflationThickness->cxLeftWidth
-     && borMargins.cxRightWidth >= CTLW_marMinInflationThickness->cxRightWidth
-     && borMargins.cyTopHeight >= CTLW_marMinInflationThickness->cyTopHeight
-     && borMargins.cyBottomHeight >= CTLW_marMinInflationThickness->cyBottomHeight
-     && !(winStyleEx & 0x800000)
-     && GetSystemMetricsForDpi(SM_CXPADDEDBORDER, DPIValue) > 0) 
+        && borMargins.cxLeftWidth >= CTLW_marMinInflationThickness->cxLeftWidth
+        && borMargins.cxRightWidth >= CTLW_marMinInflationThickness->cxRightWidth
+        && borMargins.cyTopHeight >= CTLW_marMinInflationThickness->cyTopHeight
+        && borMargins.cyBottomHeight >= CTLW_marMinInflationThickness->cyBottomHeight
+        && !(winStyleEx & 0x800000)
+        && GetSystemMetricsForDpi(SM_CXPADDEDBORDER, DPIValue) > 0)
     {
         RECT rect = { 0, 0, 0, 0 };
         AdjustWindowRectExForDpi(&rect, winStyle, 0, winStyleEx, DPIValue);
@@ -950,15 +950,15 @@ __int64 CTLW_ValidateVisual_Hook(BYTE* pThis) { // TO BE OVERHAULED ONCE/IF VALI
 
 #if TARGETBUILD >= 18362
     MARGINS borderOutset = *(MARGINS*)(pThis + CTLW_BorderMarginsOuter);
-    if (*(pThis + wState1) & STATE_MAXIMIZED) 
+    if (*(pThis + wState1) & STATE_MAXIMIZED)
         borderOutset = *(MARGINS*)(pThis + CTLW_BorderMarginsOuterMax);
 
     MARGINS clientMargins = *(MARGINS*)(pThis + CTLW_ClientMargins);
 
     bool hasClient = clientMargins.cxLeftWidth != 0     // could have some edge cases but it's the best i can do
-                  || clientMargins.cxRightWidth != 0    // without rewriting ValidateVisual
-                  || clientMargins.cyTopHeight != 0
-                  || clientMargins.cyBottomHeight != 0;
+        || clientMargins.cxRightWidth != 0    // without rewriting ValidateVisual
+        || clientMargins.cyTopHeight != 0
+        || clientMargins.cyBottomHeight != 0;
     BYTE* windowData = *(BYTE**)(pThis + CTLW_WindowData);
 
     if (!rv && /**(HWND*)(windowData + CWD_HWND) && (*(pThis + wState1) & STYLE_THICKFRAME) == 0 &&*/ hasClient) {
@@ -1174,12 +1174,11 @@ long CTopLevelWindow_UpdateNCAreaButton(BYTE* pThis, int buttonId, int insetTop,
 }
 
 long CTLW_UpdateNCAreaPositionsAndSizes_Hook(BYTE* pThis) {
+    CTLW_UpdateNCAreaPositionsAndSizes_orig(pThis);
+
     int XBOffsetNor = awmsettings.xBtnOffsetNormal;
     int XBOffsetMax = awmsettings.xBtnOffsetMaximized;
     MARGINS clientMargins = *(MARGINS*)(pThis + CTLW_ClientMargins);
-
-    // Here as a tiny test, plus a reference on how to use CDM_pDesktopManagerInstance
-    //*(double*)(*CDM_pDesktopManagerInstance + CDM_Win10BorderSize) = (double)(3 + GetSystemMetrics(SM_CXBORDER) + GetSystemMetrics(SM_CXPADDEDBORDER));
 
     bool isMaximized = *(pThis + wState1) & STATE_MAXIMIZED;
     bool isTool = *(pThis + wState2) & TYPE_TOOL;
@@ -1187,19 +1186,15 @@ long CTLW_UpdateNCAreaPositionsAndSizes_Hook(BYTE* pThis) {
     BYTE* windowVisual = *(BYTE**)(pThis + CTLW_WindowVisual);
     int DPIValue = *(int*)(windowVisual + CVis_DPI);
 
-    // For getting the caption buttons back in windows without a client area.
-    /*if (DPIValue == 0)
-        DPIValue = 96;*/
-
-    if (*(long long *)(pThis + CTLW_ClientArea)) {
-        BYTE* clientVisual = *(BYTE **)(pThis + CTLW_ClientVisual);
+    if (*(long long*)(pThis + CTLW_ClientArea)) {
+        BYTE* clientVisual = *(BYTE**)(pThis + CTLW_ClientVisual);
         CVisual_SetInsetFromParentLeft(clientVisual, clientMargins.cxLeftWidth);
         CVisual_SetInsetFromParentRight(clientVisual, clientMargins.cxRightWidth);
         CVisual_SetInsetFromParentTop(clientVisual, clientMargins.cyTopHeight);
         CVisual_SetInsetFromParentBottom(clientVisual, clientMargins.cyBottomHeight);
 
         // seems unused, included here anyway just in case
-        BYTE* clientBlur = *(BYTE **)(pThis + CTLW_ClientBlur);
+        BYTE* clientBlur = *(BYTE**)(pThis + CTLW_ClientBlur);
         if (clientBlur) {
             CVisual_SetInsetFromParent(clientBlur, (struct _MARGINS*)(clientVisual + CVis_InsetFromParent));
         }
@@ -1226,12 +1221,6 @@ long CTLW_UpdateNCAreaPositionsAndSizes_Hook(BYTE* pThis) {
         insetRight = *(int*)(windowVisual + CVis_BorderWidth);
     }
 
-    /*if (insetRight + XBOffsetNor <= borderSizes->cxRightWidth + XBOffsetMax) {
-        insetRight = borderSizes->cxRightWidth + XBOffsetMax;
-    }
-    else {
-        insetRight += XBOffsetNor;
-    }*/
     if (isMaximized) {
         insetRight = borderSizes->cxRightWidth + XBOffsetMax;
     }
@@ -1255,13 +1244,13 @@ long CTLW_UpdateNCAreaPositionsAndSizes_Hook(BYTE* pThis) {
             break;
         case AWM_BTN_ALIGN_TBCENTER:
             insetTop = fullTBHeight - TBHeight - 1;
-            insetTop += (TBHeight - btnHeight)/2;
+            insetTop += (TBHeight - btnHeight) / 2;
             break;
         case AWM_BTN_ALIGN_BOTTOM:
             insetTop = fullTBHeight - btnHeight - awmsettings.xBtnInsetDirectionalPalette;
             break;
         }
-        insetRight+=awmsettings.xBtnOffsetPalette;
+        insetRight += awmsettings.xBtnOffsetPalette;
     }
 
     CTopLevelWindow_UpdateNCAreaButton(pThis, 3, insetTop, &insetRight, DPIValue);
@@ -1301,43 +1290,12 @@ long CTLW_UpdateNCAreaPositionsAndSizes_Hook(BYTE* pThis) {
         else
             borderSize = *(DWORD*)(windowVisual + CVis_BorderWidth);
 
-        tagSIZE size = {0, clientMargins.cyTopHeight - borderSize - 2};
+        tagSIZE size = { 0, clientMargins.cyTopHeight - borderSize - 2 };
 
         CVisual_SetInsetFromParentTop(textVisual, borderSize + 1);
-        //CVisual_SetInsetFromParentLeft(textVisual, insetLeft);
-        
-        // Changed from above to support my hacky method of handling text glow
-        CVisual_SetInsetFromParentLeft(textVisual, 1 + borderSizes->cxLeftWidth);
-        CVisual_SetInsetFromParentRight(textVisual, 1);
+        CVisual_SetInsetFromParentLeft(textVisual, insetLeft);
         CVisual_SetSize(textVisual, &size);
-
-        // place this somewhere it will update on window resize.
-        TEXTEX* textex = *(TEXTEX**)(textVisual + CTxt_Ex);
-        //RECT winrc = *(RECT*)(windowVisual + CWD_WindowRect);
-        //textex->tbWidth = winrc.right - winrc.left;
-        textex->textInset = { 0 };
-        textex->textInset.cxLeftWidth = insetLeft - 1 - borderSizes->cxLeftWidth;
-        textex->textInset.cxRightWidth = insetRight - 1;
-
-
-        // SOME TESTING CODE. IT CAN BE SAFELY REMOVED AND IS NOT SUPPOSED TO BE HERE.
-
-        /*RECT rc = {winrc.left + borderSizes->cxLeftWidth,
-            winrc.top + borderSizes->cyTopHeight,
-            winrc.right + borderSizes->cxRightWidth,
-            winrc.bottom + borderSizes->cyBottomHeight,
-        };
-
-        float DPI = *(float*)(windowVisual + CWD_DPIFloat);
-        *(float*)(windowVisual + CWD_DPIFloat) = 1.f;
-        fprintf(stream, "%f\n", DPI);
-        fprintf(stream, "%i\n", *(int*)(windowVisual + CWD_WindowRectRight));
-        HRGN rgn = CreateRectRgnIndirect(&winrc);
-        SetWindowRgnEx(*(HWND*)(windowVisual + CWD_HWND), rgn, 1);
-        DeleteObject(rgn);*/
     }
-
-    CTopLevelWindow_UpdatePinnedParts(pThis); // Handles the atlas borders. A rewrite would be able to restore 7 behavior fully (except thickening of small kernel frames).
 
     return 0;
 }
@@ -1452,6 +1410,8 @@ int CText_InitializeVisualTreeClone_Hook(BYTE* pThis, BYTE* pNew, UINT options) 
 }
 
 void CText_SetColor_Hook(BYTE* pThis, COLORREF color) {
+    color = 0x000000;
+    CText_SetColor_orig(pThis, color);
 }
 
 void CText_SetBackgroundColor_Hook(BYTE* pThis, COLORREF color) {
@@ -1777,10 +1737,10 @@ int CText_ValidateResources_Hook(BYTE* pThis) {
                         target->SetTransform(D2D1::Matrix3x2F::Scale(1, 1) * trnsfrmmatrix);
 
                         miostarget->PushAxisAlignedClip({ 0, 0, size.width, size.height }, D2D1_ANTIALIAS_MODE_ALIASED);
-			target->SetTextAntialiasMode(awmsettings.textAntiAlias);
+                        target->SetTextAntialiasMode(awmsettings.textAntiAlias);
                         target->DrawTextLayout(startshadow, textlayout, shadowbrush, D2D1_DRAW_TEXT_OPTIONS_NONE);
                         target->DrawTextLayout(start, textlayout, textbrush, D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
-			target->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_DEFAULT);
+                        target->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_DEFAULT);
                         miostarget->PopAxisAlignedClip();
 
                         hr = target->EndDraw();
@@ -1798,12 +1758,12 @@ int CText_ValidateResources_Hook(BYTE* pThis) {
                         if (hr < 0)
                             goto release;*/
 
-    #if TARGETBUILD == 19041 || TARGETBUILD == 18362
+#if TARGETBUILD == 19041 || TARGETBUILD == 18362
                         hr = CBitmapSource_Create(bitmap, 0, &bmpsrc);
-    #elif TARGETBUILD == 17763
+#elif TARGETBUILD == 17763
                         BYTE* resource = *(BYTE**)(pThis + CTxt_Resource);
                         hr = CBitmapSource_Create(bitmap, 0, *(IDwmChannel**)(resource + CResource_Channel), &bmpsrc);
-    #endif
+#endif
                         if (hr < 0)
                             goto release;
                         hr = CDrawImageInstruction_Create(bmpsrc, &fillbox, &imageinstruction);
@@ -1878,7 +1838,7 @@ __int64 CRD_DrawSolidColorRectangle_Hook(BYTE* pThis, BYTE* pDrawingContext, BYT
         red = 0.0F;
     }
     else
-        red += (1.0F/60.0F);
+        red += (1.0F / 60.0F);
     color->r = red;
     color->g = green;
     color->b = blue;
@@ -2060,51 +2020,11 @@ int HookFunctions() {
     if (rv) {
         return ERR_FH_INIT;
     }
-    rv = funchook_prepare(funchook, (void**)&CText_ValidateResources_orig, CText_ValidateResources_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_CText_orig, CText_CText_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
     rv = funchook_prepare(funchook, (void**)&CText_SetColor_orig, CText_SetColor_Hook);
     if (rv) {
         return ERR_FH_INIT;
     }
-    rv = funchook_prepare(funchook, (void**)&CText_SetBackgroundColor_orig, CText_SetBackgroundColor_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CTLW_UpdateWindowVisuals_orig, CTLW_UpdateWindowVisuals_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_InitializeVisualTreeClone_orig, CText_InitializeVisualTreeClone_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_Destroy_orig, CText_Destroy_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CDesktopManager_LoadTheme_orig, CDesktopManager_LoadTheme_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CDesktopManager_UnloadTheme_orig, CDesktopManager_UnloadTheme_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
     rv = funchook_prepare(funchook, (void**)&CButton_SetVisualStates_orig, CButton_SetVisualStates_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_SetText_orig, CText_SetText_Hook);
-    if (rv) {
-        return ERR_FH_INIT;
-    }
-    rv = funchook_prepare(funchook, (void**)&CText_SetFont_orig, CText_SetFont_Hook);
     if (rv) {
         return ERR_FH_INIT;
     }
@@ -2161,16 +2081,16 @@ __declspec(dllexport) DWORD WINAPI main(DWORD* dword) {
     stream = stdout;
 #if AWM_DEBUG == TRUE
     if (!AllocConsole());
-        if (freopen_s(
-            &conout,
-            "CONOUT$",
-            "w",
-            stdout)
-            );
-            fprintf(
-                stream,
-                "Aero Window Manager Logs\n========================\n"
-            );
+    if (freopen_s(
+        &conout,
+        "CONOUT$",
+        "w",
+        stdout)
+        );
+    fprintf(
+        stream,
+        "Aero Window Manager Logs\n========================\n"
+    );
 #endif
 
     // -------------------------------------------------------------------
