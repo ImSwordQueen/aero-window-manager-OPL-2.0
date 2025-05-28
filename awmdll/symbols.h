@@ -40,7 +40,7 @@
 #define CText_SetBackgroundColor_Name L"public: void __cdecl CText::SetBackgroundColor(unsigned long)"
 #define CTLW_UpdateWindowVisuals_Name L"private: long __cdecl CTopLevelWindow::UpdateWindowVisuals(void)"
 #define CText_InitializeVisualTreeClone_Name L"protected: long __cdecl CText::InitializeVisualTreeClone(class CText *,enum CloneOptions)"
-#define CText_Destroy_Name L"private: virtual void* __cdecl CText::`scalar deleting dtor'(unsigned int)"
+#define CText_Destroy_Name L"private: virtual void * __cdecl CText::`scalar deleting destructor'(unsigned int)"
 #define CDesktopManager_LoadTheme_Name L"private: long __cdecl CDesktopManager::LoadTheme(void)"
 #define CDesktopManager_UnloadTheme_Name L"private: void __cdecl CDesktopManager::UnloadTheme(void)"
 #define CButton_SetVisualStates_Name L"public: long __cdecl CButton::SetVisualStates(class CBitmapSourceArray const &,class CBitmapSourceArray const &,class CBitmapSource *,float)"
