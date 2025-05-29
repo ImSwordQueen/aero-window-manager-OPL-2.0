@@ -1,9 +1,15 @@
-# Aero Window Manager
+# Aero Window Manager For OpenGlass Legacy 2.0
 
 Aero Window Manager is a configuration utility for modifying the metrics of
 objects drawn by DWM frames on Windows 10. The currently supported versions are
 1809 (build 17763), 1903/09 (builds 18362 and 18363), as well as 2004-22H2
 (builds 19041-19045).
+
+This fork is meant to improve compatibility with newer versions of OpenGlass Legacy (2.0+).
+
+There are 2 Releases of AWM-OPL2:
+- [Full](https://github.com/ImSwordQueen/aero-window-manager-OPL-2.0/releases/tag/1) - Maintains almost all the features of Aero Window Manager intact other than the titlebar coloring.
+- [Basic](https://github.com/ImSwordQueen/aero-window-manager-OPL-2.0/releases/tag/basic-hooks1) - Removes all the hooks related that can be replicated with OpenGlass (Other than hardcoding the text color to black to replicate Windows Vista/7.)
 
 ## How to install
 
@@ -118,16 +124,6 @@ These reside in `HKLM/Software/AWM`.
 | TB_InsetLeftMulMax | (0-inf) | 1 |
 | TB_TextInset | (0-inf) | 5 |
 | TB_BtnInactiveOpacity | (0-100) | 40 |
-| UseTransparency | (0-1) | 0 |
-| AccentPolicy | (0-4) | 0 |
-| Window_ColorRActive | (0-255) | 255 |
-| Window_ColorGActive | (0-255) | 255 |
-| Window_ColorBActive | (0-255) | 255 |
-| Window_ColorRInactive | (0-255) | 255 |
-| Window_ColorGInactive | (0-255) | 255 |
-| Window_ColorBInactive | (0-255) | 255 |
-| Window_ColorBalanceActive | (0-100) | 100 |
-| Window_ColorBalanceInactive | (0-100) | 100 |
 | Text_ColorRActive | (0-255) | 0 |
 | Text_ColorGActive | (0-255) | 0 |
 | Text_ColorBActive | (0-255) | 0 |
