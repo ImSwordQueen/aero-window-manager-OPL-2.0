@@ -118,39 +118,7 @@ These reside in `HKLM/Software/AWM`.
 | TB_InsetLeftMulMax | (0-inf) | 1 |
 | TB_TextInset | (0-inf) | 5 |
 | TB_BtnInactiveOpacity | (0-100) | 40 |
-| UseTransparency | (0-1) | 0 |
-| AccentPolicy | (0-4) | 0 |
-| Window_ColorRActive | (0-255) | 255 |
-| Window_ColorGActive | (0-255) | 255 |
-| Window_ColorBActive | (0-255) | 255 |
-| Window_ColorRInactive | (0-255) | 255 |
-| Window_ColorGInactive | (0-255) | 255 |
-| Window_ColorBInactive | (0-255) | 255 |
-| Window_ColorBalanceActive | (0-100) | 100 |
-| Window_ColorBalanceInactive | (0-100) | 100 |
-| Text_ColorRActive | (0-255) | 0 |
-| Text_ColorGActive | (0-255) | 0 |
-| Text_ColorBActive | (0-255) | 0 |
-| Text_ColorAActive | (0-255) | 255 |
-| Text_ColorRInactive | (0-255) | 0 |
-| Text_ColorGInactive | (0-255) | 0 |
-| Text_ColorBInactive | (0-255) | 0 |
-| Text_ColorAInactive | (0-255) | 102 |
-| Text_ShadowColorRActive | (0-255) | 0 |
-| Text_ShadowColorGActive | (0-255) | 0 |
-| Text_ShadowColorBActive | (0-255) | 0 |
-| Text_ShadowColorAActive | (0-255) | 0 |
-| Text_ShadowColorRInactive | (0-255) | 0 |
-| Text_ShadowColorGInactive | (0-255) | 0 |
-| Text_ShadowColorBInactive | (0-255) | 0 |
-| Text_ShadowColorAInactive | (0-255) | 0 |
-| Text_ShadowOffsetX | (-inf-inf) | 0 |
-| Text_ShadowOffsetY | (-inf-inf) | 0 |
-| Text_Alignment | (0-4) | left |
 | TB_IconTextVertAlign | (0-1) | center |
-| Text_GlowOpacityActive | (0-100) | 0 |
-| Text_GlowOpacityInactive | (0-100) | 0 |
-| Text_AntiAlias | (0-3) (default, cleartype, grayscale, aliased) | 0 |
 
 ## Credits
 Dulappy: AWM\
